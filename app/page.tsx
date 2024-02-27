@@ -1,6 +1,6 @@
 import { Card, Title, Text } from '@tremor/react';
-import Search from './search';
-import UsersTable from './components/shared/table';
+import Search from './components/shared/search';
+import UsersTable from '@/components/shared/table';
 
 interface User {
   id: number;
