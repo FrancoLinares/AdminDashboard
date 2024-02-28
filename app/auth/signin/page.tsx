@@ -1,6 +1,7 @@
 'use client';
+import { useAuth } from 'hooks/useAuth';
 import { signIn } from 'next-auth/react';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 
 type LoginInput = {
   username: string;
@@ -12,6 +13,8 @@ type PageProps = {
 };
 
 export default function LoginPage({ searchParams }: PageProps) {
+  const { session } = useAuth();
+
   const [inputs, setInputs] = useState<LoginInput>({
     username: '',
     password: ''
