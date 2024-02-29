@@ -1,15 +1,14 @@
-import { Session } from 'next-auth';
-import { getServerSession } from 'next-auth/next';
-import type { APIRequestError } from './errors';
 import { INVALID_TOKEN } from '@/constants/apiErrors';
-import { authOptions } from '../app/api/auth/[...nextauth]/route';
+import { APIRequestError } from '@/server/errors';
+import { Session } from 'next-auth';
+import { getSession } from 'next-auth/react';
 import { redirect } from 'next/navigation';
-import { useSession } from 'next-auth/react';
 
-export const getHeaders = async () => {
-  const session = await getServerSession(authOptions);
+export const getHeaders = async (sessionFromWrapper: Session | null) => {
+  const session = sessionFromWrapper || (await getSession());
   console.log('🚀 ~ getHeaders ~ session:', session);
   const user = session?.user;
+
   const token = user?.access_token;
 
   return {
@@ -17,11 +16,13 @@ export const getHeaders = async () => {
   };
 };
 
-export const authWrapper = async (promise: Promise<any>) => {
-  const session = await getServerSession(authOptions);
+export const authWrapperClient = async (
+  promise: (session: Session | null) => Promise<any>
+) => {
+  const session = await getSession();
 
   try {
-    return await promise;
+    return await promise(session);
   } catch (err: any | APIRequestError) {
     if (err.statusCode === 401 || err.message === INVALID_TOKEN) {
       if (session?.user?.access_token) {

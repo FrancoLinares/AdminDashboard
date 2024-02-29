@@ -26,6 +26,31 @@ const userService = {
     console.log('🚀 ~ getAll ~ users:', users);
 
     return users;
+  },
+  async deleteUser(id: string) {
+    const headers = await getHeaders();
+    console.log('🚀 ~ deleteUser ~ headers:', headers);
+
+    return { status: 'delete' };
+
+    const req = await fetch(`${API_LILI_URLS.USERS}/${id}`, {
+      method: 'DELETE',
+      headers,
+      ...cacheProps
+    });
+
+    console.log('response', req);
+    const res = await req.json();
+    if (!req.ok) {
+      const message = res.message || 'Failed to delete user';
+      throw new APIRequestError(message, res.status);
+    }
+
+    const users = res.data?.users || [];
+
+    console.log('🚀 ~ getAll ~ users:', users);
+
+    return users;
   }
 };
 

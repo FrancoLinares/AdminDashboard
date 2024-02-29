@@ -1,3 +1,4 @@
+'use client';
 import { User } from '@/types/user';
 import {
   Table,
@@ -8,10 +9,33 @@ import {
   TableCell,
   Text
 } from '@tremor/react';
-import { CircleCheck, CircleXMark } from './icons';
+import { CircleCheck, CircleXMark, DeleteIcon, EditIcon } from './icons';
+import userService from 'services/userService';
+import { useRouter } from 'next/navigation';
 
 export default function UsersTable({ users }: { users: User[] }) {
-  const tableHeaders = ['Nombre', 'Email', 'Telefono', 'Verificado'];
+  const router = useRouter();
+
+  const tableHeaders = [
+    'Nombre',
+    'Email',
+    'Telefono',
+    'Verificado',
+    'Acciones'
+  ];
+
+  const editHandler: () => void = () => {
+    console.log('edit');
+
+    router.push('/user');
+  };
+
+  const deleteHandler: (userId: string) => void = async (userId) => {
+    console.log('delete');
+
+    const user = await userService.deleteUser(userId);
+    console.log('user response', user);
+  };
 
   return (
     <Table>
@@ -34,6 +58,12 @@ export default function UsersTable({ users }: { users: User[] }) {
             </TableCell>
             <TableCell>
               {user?.verified ? <CircleXMark /> : <CircleCheck />}
+            </TableCell>
+            <TableCell>
+              <div className="flex flex-row">
+                <EditIcon onClickHandler={editHandler} />
+                <DeleteIcon onClickHandler={() => deleteHandler(user._id)} />
+              </div>
             </TableCell>
           </TableRow>
         ))}
