@@ -1,3 +1,4 @@
+import { User } from '@/types/user';
 import {
   Table,
   TableHead,
@@ -7,33 +8,32 @@ import {
   TableCell,
   Text
 } from '@tremor/react';
-
-interface User {
-  id: number;
-  name: string;
-  username: string;
-  email: string;
-}
+import { CircleCheck, CircleXMark } from './icons';
 
 export default function UsersTable({ users }: { users: User[] }) {
+  const tableHeaders = ['Nombre', 'Email', 'Telefono', 'Verificado'];
+
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <TableHeaderCell>Name</TableHeaderCell>
-          <TableHeaderCell>Username</TableHeaderCell>
-          <TableHeaderCell>Email</TableHeaderCell>
+          {tableHeaders.map((header) => (
+            <TableHeaderCell key={header}>{header}</TableHeaderCell>
+          ))}
         </TableRow>
       </TableHead>
       <TableBody>
         {users.map((user) => (
-          <TableRow key={user.id}>
+          <TableRow key={user._id}>
             <TableCell>{user.name}</TableCell>
             <TableCell>
-              <Text>{user.username}</Text>
+              <Text>{user.email}</Text>
             </TableCell>
             <TableCell>
-              <Text>{user.email}</Text>
+              <Text>{user.phone}</Text>
+            </TableCell>
+            <TableCell>
+              {user?.verified ? <CircleXMark /> : <CircleCheck />}
             </TableCell>
           </TableRow>
         ))}
