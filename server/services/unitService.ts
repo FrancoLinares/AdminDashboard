@@ -2,6 +2,7 @@ import { API_LILI_URLS } from '@/server/urls';
 import { APIRequestError } from '@/server/errors';
 import { Session } from 'next-auth';
 import { authWrapperServer, getHeaders } from '../shared';
+import { cacheProps } from '../constants';
 
 const unitsService = {
   async getUnitsByUserId(userId: string) {
@@ -10,7 +11,8 @@ const unitsService = {
 
       const req = await fetch(`${API_LILI_URLS.UNITS}/${userId}`, {
         method: 'GET',
-        headers
+        headers,
+        ...cacheProps
       });
 
       const statusCode = req.status;

@@ -25,8 +25,8 @@ export const authWrapper = async (promise: Promise<any>) => {
     if (err.statusCode === 401 || err.message === INVALID_TOKEN) {
       if (session?.user?.access_token) {
         session.user.access_token = null;
-        redirect('/auth/signin');
       }
+      redirect('/auth/signin');
     }
 
     return err;
