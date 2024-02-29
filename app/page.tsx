@@ -2,8 +2,9 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from 'api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
 import { Card, Title, Text } from '@tremor/react';
-import Search from './components/shared/search';
+import Search from '@/components/shared/search';
 import UsersTableWrapper from './components/Users/page';
+import Modal from '@/components/shared/Modal';
 
 export default async function IndexPage({
   searchParams
@@ -11,7 +12,6 @@ export default async function IndexPage({
   searchParams: { q: string };
 }) {
   const session = await getServerSession(authOptions);
-  console.log('🚀 ~ session:', session);
 
   if (!session?.user) {
     redirect('/auth/signin');
@@ -21,6 +21,7 @@ export default async function IndexPage({
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
       <Title>Users</Title>
       <Text>A list of users retrieved from a Postgres database.</Text>
+      <Modal />
       <Search />
       <Card className="mt-6">
         <UsersTableWrapper />
