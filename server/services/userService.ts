@@ -9,7 +9,6 @@ const userService = {
   async getAll() {
     return authWrapperServer(async (session: Session | null) => {
       const headers = await getHeaders(session);
-      console.log('🚀 ~ getAll ~ headers:', headers);
 
       const req = await fetch(`${API_LILI_URLS.USERS}`, {
         method: 'GET',
@@ -18,7 +17,6 @@ const userService = {
       });
 
       const statusCode = req.status;
-      console.log('🚀 ~ returnauthWrapperServer ~ statusCode:', statusCode);
       const res = await req.json();
       if (!req.ok) {
         const message = res.message || 'Failed to fetch users';

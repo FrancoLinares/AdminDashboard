@@ -6,7 +6,6 @@ import { redirect } from 'next/navigation';
 
 export const getHeaders = async (sessionFromWrapper: Session | null) => {
   const session = sessionFromWrapper || (await getSession());
-  console.log('🚀 ~ getHeaders ~ session:', session);
   const user = session?.user;
 
   const token = user?.access_token;
@@ -20,7 +19,6 @@ export const authWrapperClient = async (
   promise: (session: Session | null) => Promise<any>
 ) => {
   const session = await getSession();
-  console.log('🚀 ~ session:', session);
 
   try {
     return await promise(session);
