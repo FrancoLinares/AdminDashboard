@@ -4,6 +4,7 @@ import { getHeaders } from '../shared';
 import { API_LILI_URLS } from '../urls';
 
 const userService = {
+  // TODO: refactor this to include authWrapper
   async getAll() {
     const headers = await getHeaders();
     console.log('🚀 ~ getAll ~ headers:', headers);
@@ -15,10 +16,11 @@ const userService = {
     });
 
     console.log('response', req);
+    const statusCode = req.status;
     const res = await req.json();
     if (!req.ok) {
       const message = res.message || 'Failed to fetch users';
-      throw new APIRequestError(message, res.status);
+      throw new APIRequestError(message, statusCode);
     }
 
     const users = res.data?.users || [];
@@ -40,10 +42,11 @@ const userService = {
     });
 
     console.log('response', req);
+    const statusCode = req.status;
     const res = await req.json();
     if (!req.ok) {
       const message = res.message || 'Failed to delete user';
-      throw new APIRequestError(message, res.status);
+      throw new APIRequestError(message, statusCode);
     }
 
     const users = res.data?.users || [];

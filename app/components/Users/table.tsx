@@ -9,7 +9,12 @@ import {
   TableCell,
   Text
 } from '@tremor/react';
-import { CircleCheck, CircleXMark, DeleteIcon, EditIcon } from './icons';
+import {
+  CircleCheck,
+  CircleXMark,
+  DeleteIcon,
+  EditIcon
+} from '../shared/icons';
 import userService from 'services/userService';
 import { useRouter } from 'next/navigation';
 
@@ -24,10 +29,10 @@ export default function UsersTable({ users }: { users: User[] }) {
     'Acciones'
   ];
 
-  const editHandler: () => void = () => {
+  const editHandler: (userId: string) => void = (userId) => {
     console.log('edit');
 
-    router.push('/user');
+    router.push(`/user/${userId}`);
   };
 
   const deleteHandler: (userId: string) => void = async (userId) => {
@@ -61,7 +66,7 @@ export default function UsersTable({ users }: { users: User[] }) {
             </TableCell>
             <TableCell>
               <div className="flex flex-row">
-                <EditIcon onClickHandler={editHandler} />
+                <EditIcon onClickHandler={() => editHandler(user._id)} />
                 <DeleteIcon onClickHandler={() => deleteHandler(user._id)} />
               </div>
             </TableCell>

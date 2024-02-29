@@ -1,4 +1,4 @@
-import UsersTable from '../shared/table';
+import UsersTable from './table';
 import userService from '@/server/services/userService';
 import { authWrapper } from '@/server/shared';
 

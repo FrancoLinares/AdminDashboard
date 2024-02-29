@@ -13,3 +13,17 @@ export type User = {
   updatedAt?: Date;
   __v?: number;
 };
+
+export type Unit = {
+  _id: string;
+  user_id: string;
+  partnership_id: number;
+  address: string;
+  name_expense: string;
+  // Identifier ID is used to identify the UNIT in TECO API
+  unit_id: number;
+  // Unidad Funcional
+  unit: number;
+  department: string;
+  floor: string;
+};
