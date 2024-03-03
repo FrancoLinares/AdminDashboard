@@ -6,6 +6,7 @@ import Toast from './components/shared/toast';
 import { Suspense } from 'react';
 import SessionProvider from 'providers/SessionProvider';
 import { ModalProvider } from 'providers/ModalProvider';
+import Modal from '@/components/shared/Modal';
 
 export const metadata = {
   title: 'Next.js App Router + NextAuth + Tailwind CSS',
@@ -23,6 +24,7 @@ export default async function RootLayout({
       <body className="h-full">
         <SessionProvider>
           <ModalProvider>
+            <Modal />
             <Suspense>
               <Nav />
             </Suspense>

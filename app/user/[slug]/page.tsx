@@ -1,4 +1,5 @@
 import UnitsTableWrapper from '@/components/Units/page';
+import { AddIcon } from '@/components/shared/icons';
 import userService from '@/server/services/userService';
 import { User } from '@/types/user';
 import { Card, Text, Title } from '@tremor/react';

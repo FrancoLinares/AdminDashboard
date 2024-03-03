@@ -27,3 +27,11 @@ export type Unit = {
   department: string;
   floor: string;
 };
+
+export type UnitFromTECO = {
+  id: string;
+  name: string;
+  floor: string;
+  department: string;
+  unit: number;
+};
