@@ -4,12 +4,17 @@ import { useModalContext } from 'providers/ModalProvider';
 import { Button, Dialog, DialogPanel } from '@tremor/react';
 
 import FormAddUnit from '../Form/AddUnit';
+import RemoveUnit from '../Form/RemoveUnit';
+import { EFormTypes } from '../Form/types';
+
+const componentsRenderCloseButton = [EFormTypes.ADD_UNIT];
 
 const Modal = () => {
   const { isOpen, toggle, title, formType } = useModalContext();
 
   const formComponents = {
-    ADD_UNIT: <FormAddUnit />
+    ADD_UNIT: <FormAddUnit />,
+    REMOVE_UNIT: <RemoveUnit />
   };
 
   return (
@@ -20,14 +25,16 @@ const Modal = () => {
             {title}
           </h3>
           {formComponents[formType as keyof typeof formComponents]}
-          <Button
-            className="mt-8 w-full"
-            variant="secondary"
-            color="red"
-            onClick={() => toggle()}
-          >
-            Cerrar
-          </Button>
+          {componentsRenderCloseButton.includes(formType) && (
+            <Button
+              className="mt-8 w-full"
+              variant="secondary"
+              color="red"
+              onClick={() => toggle()}
+            >
+              Cerrar
+            </Button>
+          )}
         </DialogPanel>
       </Dialog>
     </>

@@ -21,13 +21,16 @@ import { useEffect } from 'react';
 import { TITLE_ADD_UNIT, TITLE_REMOVE_UNIT } from '@/constants/modal';
 import { EFormTypes } from '../Form/types';
 import { useSharedDataContext } from 'providers/SharedDataProvider';
+import { toast } from 'sonner';
+import { UNIT_NOT_FOUND } from './constants';
 
 export default function UnitsTable({ units }: { units: Unit[] }) {
   const {
     isOpen,
     toggle: toggleModal,
     setTitle: setTileModal,
-    setFormType: setFormTypeModal
+    setFormType: setFormTypeModal,
+    setRemoveUnitId
   } = useModalContext();
   const { setUnitsByUserId, unitsByUserId = [] } = useSharedDataContext();
 
@@ -48,13 +51,17 @@ export default function UnitsTable({ units }: { units: Unit[] }) {
   }, [isOpen]);
 
   const deleteHandler: (userId: string) => void = async (userId) => {
-    console.log('delete');
+    const unitToDelete = unitsByUserId.find((user) => user._id === userId);
+    if (!unitToDelete) {
+      return toast.error(UNIT_NOT_FOUND);
+    }
 
-    setTileModal(TITLE_REMOVE_UNIT);
+    setTileModal(
+      `${TITLE_REMOVE_UNIT} UF:${unitToDelete.unit} - Piso:${unitToDelete.floor} // Depto:${unitToDelete.department} ?`
+    );
+    setFormTypeModal(EFormTypes.REMOVE_UNIT);
+    setRemoveUnitId(unitToDelete._id);
     toggleModal();
-
-    // const user = await userService.deleteUser(userId);
-    // console.log('user response', user);
   };
 
   return (

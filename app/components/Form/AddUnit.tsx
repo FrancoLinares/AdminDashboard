@@ -82,7 +82,7 @@ const FormAddUnit = () => {
         userId: user._id
       };
 
-      fetch('/api/teco?type=addUnit', {
+      fetch('/api/unit?type=addUnit', {
         method: 'POST',
         body: JSON.stringify(data)
       })

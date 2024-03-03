@@ -13,9 +13,10 @@ export type Modal = {
   toggle: () => void;
   title: string | null;
   setTitle: Dispatch<SetStateAction<string | null>>;
-  submitAddUnit: (data: any) => void;
   formType: EFormTypes;
   setFormType: Dispatch<SetStateAction<EFormTypes | null>>;
+  removeUnitId: string | null;
+  setRemoveUnitId: Dispatch<SetStateAction<string | null>>;
 };
 
 export const ModalContext = createContext<Modal | undefined>(undefined);
@@ -34,19 +35,18 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setOpen] = useState<boolean>(false);
   const [title, setTitle] = useState<string | null>();
   const [formType, setFormType] = useState<EFormTypes | null>(null);
+  const [removeUnitId, setRemoveUnitId] = useState<string | null>(null);
   const toggle = () => setOpen(!isOpen);
-  const submitAddUnit = (data: any) => {
-    console.log('submitAddUnit - data', data);
-  };
 
   const context = {
     isOpen,
     toggle,
-    submitAddUnit,
     title,
     setTitle,
     formType,
-    setFormType
+    setFormType,
+    removeUnitId,
+    setRemoveUnitId
   } as Modal;
 
   return (

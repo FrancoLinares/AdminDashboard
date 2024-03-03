@@ -4,7 +4,7 @@ const API_LILI_BASE_URL =
 export const API_LILI_URLS = {
   LOGIN: `${API_LILI_BASE_URL}/api/auth/login`,
   USERS: `${API_LILI_BASE_URL}/api/users`,
-  UNITS: `${API_LILI_BASE_URL}/api/unit`,
+  UNIT: `${API_LILI_BASE_URL}/api/unit`,
   PARTNERSHIPS: `${API_LILI_BASE_URL}/api/users/getPartnerships`,
   UNITS_PARTNERSHIP_ID: `${API_LILI_BASE_URL}/api/users/getUnits`
 };
