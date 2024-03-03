@@ -2,11 +2,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { toast } from 'sonner';
 import SelectCustom from '@/UI/Select';
 import { Button } from '@tremor/react';
 import { Partnership } from '@/types/shared';
 import { UnitFromTECO } from '@/types/user';
 import useSelect from 'hooks/useSelect';
+import { ADD_UNIT_ERROR, ADD_UNIT_SUCCESS } from './constants';
 
 const validationSchema = yup.object({
   unit: yup.string().required('Unidad Funcional es requerido'),
@@ -80,12 +82,16 @@ const FormAddUnit = ({ onCancel }: Props) => {
         .then((resp) => resp.json())
         .then((response) => {
           // TODO: Create an success toast
+          toast.success(ADD_UNIT_SUCCESS);
+
           console.log('response', response);
           formik.setSubmitting(false);
           formik.resetForm();
         })
         .catch((err) => {
           // TODO: Create an error toast
+          toast.error(ADD_UNIT_ERROR);
+
           console.log('err', err);
         });
     }

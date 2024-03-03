@@ -1,6 +1,7 @@
 import './globals.css';
 
 import { Analytics } from '@vercel/analytics/react';
+import { Toaster } from 'sonner';
 import Nav from './nav';
 import Toast from './components/shared/toast';
 import { Suspense } from 'react';
@@ -25,6 +26,12 @@ export default async function RootLayout({
         <SessionProvider>
           <ModalProvider>
             <Modal />
+            <Toaster
+              position="top-right"
+              expand={true}
+              richColors
+              closeButton
+            />
             <Suspense>
               <Nav />
             </Suspense>
