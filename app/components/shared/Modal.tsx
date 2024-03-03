@@ -9,14 +9,7 @@ const Modal = () => {
   const { isOpen, toggle, title, formType } = useModalContext();
 
   const formComponents = {
-    ADD_UNIT: (
-      <FormAddUnit
-        onCancel={(e: React.MouseEvent<HTMLElement>) => {
-          e.preventDefault();
-          toggle();
-        }}
-      />
-    )
+    ADD_UNIT: <FormAddUnit />
   };
 
   return (

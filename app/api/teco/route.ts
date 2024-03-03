@@ -1,5 +1,6 @@
 import { APIRequestError } from '@/server/errors';
 import tecoService from '@/server/services/tecoServices';
+import unitsService from '@/server/services/unitService';
 import { UnitFromTECO } from '@/types/user';
 import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
@@ -29,7 +30,7 @@ const addUnit = async (body: { unitId?: number; userId?: string } | null) => {
   if (!body?.unitId && !body?.userId)
     return NextResponse.json({ error: 'Faltan datos' });
 
-  const unit = await tecoService.addUnit({
+  const unit = await unitsService.addUnit({
     userId: body.userId as string,
     unitId: Number(body.unitId) as number
   });

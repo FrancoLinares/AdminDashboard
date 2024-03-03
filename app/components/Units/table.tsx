@@ -38,15 +38,9 @@ export default function UnitsTable({ units }: { units: Unit[] }) {
   const tableHeaders = ['Consorcio', 'Nombre', 'Unidad', 'Acciones'];
 
   const handleAddUnit = () => {
-    console.log('add');
-
     setTileModal(TITLE_ADD_UNIT);
     setFormTypeModal(EFormTypes.ADD_UNIT);
     toggleModal();
-  };
-
-  const editHandler: () => void = () => {
-    console.log('edit');
   };
 
   useEffect(() => {
@@ -93,7 +87,6 @@ export default function UnitsTable({ units }: { units: Unit[] }) {
               </TableCell>
               <TableCell>
                 <div className="flex flex-row">
-                  <EditIcon onClickHandler={editHandler} />
                   <DeleteIcon onClickHandler={() => deleteHandler(unit._id)} />
                 </div>
               </TableCell>

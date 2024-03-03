@@ -57,28 +57,6 @@ const tecoService = {
 
       return units;
     });
-  },
-  async addUnit({ userId, unitId }: { userId: string; unitId: number }) {
-    return authWrapperServer(async (session: Session | null) => {
-      const headers = await getHeaders(session);
-
-      const req = await fetch(`${API_LILI_URLS.UNITS}`, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify({ unit_id: unitId, user_id: userId })
-      });
-
-      const statusCode = req.status;
-      const res = await req.json();
-      if (!req.ok) {
-        const message = res.message || 'Failed to create unit';
-        throw new APIRequestError(message, statusCode);
-      }
-
-      const unit = res.data?.unit || {};
-
-      return unit;
-    });
   }
 };
 
