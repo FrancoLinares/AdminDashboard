@@ -20,6 +20,7 @@ import { useModalContext } from 'providers/ModalProvider';
 import { useEffect } from 'react';
 import { TITLE_ADD_UNIT, TITLE_REMOVE_UNIT } from '@/constants/modal';
 import { EFormTypes } from '../Form/types';
+import { useSharedDataContext } from 'providers/SharedDataProvider';
 
 export default function UnitsTable({ units }: { units: Unit[] }) {
   const {
@@ -28,6 +29,11 @@ export default function UnitsTable({ units }: { units: Unit[] }) {
     setTitle: setTileModal,
     setFormType: setFormTypeModal
   } = useModalContext();
+  const { setUnitsByUserId, unitsByUserId = [] } = useSharedDataContext();
+
+  useEffect(() => {
+    setUnitsByUserId(units);
+  }, [units]);
 
   const tableHeaders = ['Consorcio', 'Nombre', 'Unidad', 'Acciones'];
 
@@ -74,7 +80,7 @@ export default function UnitsTable({ units }: { units: Unit[] }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {units.map((unit) => (
+          {unitsByUserId.map((unit) => (
             <TableRow key={unit._id}>
               <TableCell>{unit.partnership_id}</TableCell>
               <TableCell>

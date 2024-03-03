@@ -1,7 +1,6 @@
 'use client';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
 import { toast } from 'sonner';
 import SelectCustom from '@/UI/Select';
 import { Button } from '@tremor/react';
@@ -9,22 +8,19 @@ import { Partnership } from '@/types/shared';
 import { UnitFromTECO } from '@/types/user';
 import useSelect from 'hooks/useSelect';
 import { ADD_UNIT_ERROR, ADD_UNIT_SUCCESS } from './constants';
+import { useSharedDataContext } from 'providers/SharedDataProvider';
+import { useModalContext } from 'providers/ModalProvider';
 
-const validationSchema = yup.object({
-  unit: yup.string().required('Unidad Funcional es requerido'),
-  partnership: yup.string().required('Consorcio es requerido')
-});
-
-type Props = {
-  onCancel: (e: React.MouseEvent<HTMLElement>) => void;
-};
-
-const FormAddUnit = ({ onCancel }: Props) => {
+const FormAddUnit = () => {
   const [partnerships, setPartnerships] = useState<Partnership[] | null>(null);
   const [units, setUnits] = useState<UnitFromTECO[] | null>(null);
   const { value: selectedPartnership, handleChange: handleChangePartnership } =
     useSelect();
   const { value: selectedUnit, handleChange: handleChangeUnit } = useSelect();
+  const [isLoadingForm, setLoadingForm] = useState<boolean>(false);
+  const { toggle } = useModalContext();
+
+  const { user, setUnitsByUserId } = useSharedDataContext();
 
   const handleChangePartnershipFormik = (value: string) => {
     formik.setFieldError('partnership', '');
@@ -63,9 +59,8 @@ const FormAddUnit = ({ onCancel }: Props) => {
       unit: ''
     },
     onSubmit: async () => {
-      formik.setSubmitting(true);
-      console.log('selectedPartnership', selectedPartnership);
-      console.log('selectedUnit', selectedUnit);
+      setLoadingForm(true);
+
       // Errors
       if (!selectedPartnership)
         formik.setFieldError(
@@ -74,28 +69,38 @@ const FormAddUnit = ({ onCancel }: Props) => {
         );
       if (!selectedUnit)
         formik.setFieldError('unit', 'Unidad Functional es requerido');
+      if (!user?._id) toast.error(ADD_UNIT_ERROR);
+
+      if (!selectedPartnership || !selectedUnit || !user?._id) {
+        setLoadingForm(false);
+        return;
+      }
 
       // Success
+      const data: { unitId: number; userId: string } = {
+        unitId: Number(selectedUnit),
+        userId: user._id
+      };
+
       fetch('/api/teco?type=addUnit', {
-        method: 'POST'
+        method: 'POST',
+        body: JSON.stringify(data)
       })
         .then((resp) => resp.json())
-        .then((response) => {
-          // TODO: Create an success toast
+        .then((user) => {
           toast.success(ADD_UNIT_SUCCESS);
 
-          console.log('response', response);
-          formik.setSubmitting(false);
-          formik.resetForm();
+          setUnitsByUserId((prevState) => [...prevState, user]);
         })
         .catch((err) => {
-          // TODO: Create an error toast
           toast.error(ADD_UNIT_ERROR);
-
-          console.log('err', err);
+        })
+        .finally(() => {
+          setLoadingForm(false);
+          toggle();
         });
     }
-  });
+  }) as any;
 
   const partnershipsOptions =
     useMemo(
@@ -149,7 +154,7 @@ const FormAddUnit = ({ onCancel }: Props) => {
           />
         </div>
         <div className="flex justify-center mt-20 mb-20">
-          <Button variant="primary" loading={formik.isSubmitting} type="submit">
+          <Button variant="primary" loading={isLoadingForm} type="submit">
             Agregar
           </Button>
         </div>

@@ -3,10 +3,11 @@ import { cacheProps } from '../constants';
 import { APIRequestError } from '../errors';
 import { authWrapperServer, getHeaders } from '../shared';
 import { API_LILI_URLS } from '../urls';
+import { User } from '@/types/user';
 
 const userService = {
   // TODO: refactor this to include authWrapper
-  async getAll() {
+  async getAll(): Promise<User[]> {
     return authWrapperServer(async (session: Session | null) => {
       const headers = await getHeaders(session);
 

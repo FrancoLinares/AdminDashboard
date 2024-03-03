@@ -1,6 +1,6 @@
 import { Session } from 'next-auth';
 import { getServerSession } from 'next-auth/next';
-import type { APIRequestError } from './errors';
+import { APIRequestError } from './errors';
 import { INVALID_TOKEN } from '@/constants/apiErrors';
 import { authOptions } from '../app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
@@ -12,6 +12,7 @@ export const getHeaders = async (sessionFromWrapper?: Session | null) => {
   const token = user?.access_token;
 
   return {
+    'Content-Type': 'application/json',
     Authorization: `Bearer ${token}`
   };
 };
@@ -42,16 +43,16 @@ export const authWrapperServer = async (
   try {
     return await promise(session);
   } catch (err: any | APIRequestError) {
-    console.log('error in authWrapperClient', err.statusCode, err.message);
+    console.log('error in authWrapperServer', err.statusCode, err.message);
     if (err.statusCode === 401 || err.message === INVALID_TOKEN) {
       console.log('inside aunauthirized');
       if (session?.user?.access_token) {
         session.user.access_token = null;
       }
 
-      redirect('/auth/signin');
+      return redirect('/auth/signin');
     }
 
-    return err;
+    throw new APIRequestError(err.message, err.statusCode);
   }
 };
