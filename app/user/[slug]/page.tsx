@@ -1,3 +1,6 @@
+// Opt out of caching for all data requests in the route segment
+export const fetchCache = 'force-no-store';
+
 import UnitsTableWrapper from '@/components/Units/page';
 import UserInformation from '@/components/Users/UserInformation';
 import userService from '@/server/services/userService';

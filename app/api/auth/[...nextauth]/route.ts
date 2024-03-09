@@ -6,11 +6,12 @@ import { JWT } from 'next-auth/jwt';
 
 export const authOptions: AuthOptions = {
   session: {
-    strategy: 'jwt'
+    strategy: 'jwt',
+    maxAge: 15 * 60
   },
   jwt: {
     // 15min
-    maxAge: 15 * 60
+    maxAge: 15
   },
   pages: {
     signIn: '/auth/login',

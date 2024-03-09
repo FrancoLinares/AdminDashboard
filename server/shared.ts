@@ -3,7 +3,6 @@ import { getServerSession } from 'next-auth/next';
 import { APIRequestError } from './errors';
 import { INVALID_TOKEN } from '@/constants/apiErrors';
 import { authOptions } from '../app/api/auth/[...nextauth]/route';
-import { redirect } from 'next/navigation';
 
 export const getHeaders = async (sessionFromWrapper?: Session | null) => {
   const session = sessionFromWrapper || (await getServerSession(authOptions));
@@ -27,7 +26,6 @@ export const authWrapper = async (promise: Promise<any>) => {
       if (session?.user?.access_token) {
         session.user.access_token = null;
       }
-      redirect('/auth/signin');
     }
 
     return err;
@@ -43,16 +41,12 @@ export const authWrapperServer = async (
   try {
     return await promise(session);
   } catch (err: any | APIRequestError) {
-    console.log('error in authWrapperServer', err.statusCode, err.message);
     if (err.statusCode === 401 || err.message === INVALID_TOKEN) {
-      console.log('inside aunauthirized');
       if (session?.user?.access_token) {
         session.user.access_token = null;
       }
-
-      return redirect('/auth/signin');
     }
 
-    throw new APIRequestError(err.message, err.statusCode);
+    return [];
   }
 };
