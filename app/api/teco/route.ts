@@ -4,12 +4,8 @@ import { UnitFromTECO } from '@/types/user';
 import { NextRequest, NextResponse } from 'next/server';
 
 const getPartnerships = async () => {
-  try {
-    const partnerships = await tecoService.getPartnerships();
-    return NextResponse.json(partnerships);
-  } catch (err) {
-    return NextResponse.json({ error: 'Fallo al obtener las consorcios' });
-  }
+  const partnerships = await tecoService.getPartnerships();
+  return NextResponse.json(partnerships);
 };
 
 const getUnitsByPartnershipId = async (id: string) => {
@@ -37,9 +33,9 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({});
     }
   } catch (err: any | APIRequestError) {
-    return NextResponse.json(
-      { error: err.message },
-      { status: err.statusCode | 500 }
-    );
+    return NextResponse.json({
+      error: err.message,
+      status: err.statusCode || 500
+    });
   }
 }

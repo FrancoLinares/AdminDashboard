@@ -1,8 +1,17 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@tremor/react';
 import NewsContainer from './News/NewsContainer';
 import EmailsContainer from './Emails/EmailsContainer';
+import { getServerSession } from 'next-auth';
+import { authOptions } from 'api/auth/[...nextauth]/route';
+import { redirect } from 'next/navigation';
 
-export default function Notifications() {
+export default async function Notifications() {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user) {
+    redirect('/auth/signin');
+  }
+
   return (
     <main className="p-4 md:p-10 mx-auto max-w-7xl">
       <TabGroup>

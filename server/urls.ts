@@ -6,5 +6,11 @@ export const API_LILI_URLS = {
   USERS: `${API_LILI_BASE_URL}/api/users`,
   UNIT: `${API_LILI_BASE_URL}/api/unit`,
   PARTNERSHIPS: `${API_LILI_BASE_URL}/api/users/getPartnerships`,
-  UNITS_PARTNERSHIP_ID: `${API_LILI_BASE_URL}/api/users/getUnits`
+  UNITS_PARTNERSHIP_ID: `${API_LILI_BASE_URL}/api/users/getUnits`,
+  NEWS: `${API_LILI_BASE_URL}/api/news`
+};
+
+export const API_INTERNAL_URLS = {
+  GET_PARTNERSHIPS: '/api/teco?type=partnerships',
+  ADD_NEWS: '/api/news?type=create'
 };

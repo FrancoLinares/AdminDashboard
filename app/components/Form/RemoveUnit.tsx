@@ -10,10 +10,8 @@ type Props = {};
 const RemoveUnit = (props: Props) => {
   const { toggle, removeUnitId } = useModalContext();
   const { setUnitsByUserId } = useSharedDataContext();
-  console.log('🚀 ~ RemoveUnit ~ removeUnitId:', removeUnitId);
 
   const removeUnit = (id: string) => {
-    console.log('remove', id);
     fetch('/api/unit?type=removeUnit', {
       method: 'POST',
       headers: {

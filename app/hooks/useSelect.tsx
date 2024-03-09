@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import SelectCustom from '@/components/UI/Select';
 
 type Props = {};
 
 const useSelect = () => {
   const [value, setValue] = useState<string | undefined>();
 
-  const handleChange = (value: string) => {
+  const handleChange = (value: string | undefined) => {
     setValue(value);
   };
 

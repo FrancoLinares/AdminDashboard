@@ -46,9 +46,7 @@ export default function UnitsTable({ units }: { units: Unit[] }) {
     toggleModal();
   };
 
-  useEffect(() => {
-    console.log('isOpen', isOpen);
-  }, [isOpen]);
+  useEffect(() => {}, [isOpen]);
 
   const deleteHandler: (userId: string) => void = async (userId) => {
     const unitToDelete = unitsByUserId.find((user) => user._id === userId);

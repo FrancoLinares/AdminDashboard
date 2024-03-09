@@ -6,7 +6,6 @@ import { authOptions } from '../app/api/auth/[...nextauth]/route';
 
 export const getHeaders = async (sessionFromWrapper?: Session | null) => {
   const session = sessionFromWrapper || (await getServerSession(authOptions));
-  console.log('🚀 ~ getHeaders ~ session:', session);
   const user = session?.user;
   const token = user?.access_token;
 
@@ -36,7 +35,6 @@ export const authWrapperServer = async (
   promise: (session: Session | null) => Promise<any>
 ) => {
   const session = await getServerSession(authOptions);
-  console.log('🚀 ~ session:', session);
 
   try {
     return await promise(session);
@@ -47,6 +45,6 @@ export const authWrapperServer = async (
       }
     }
 
-    return [];
+    throw new APIRequestError(err.message, err.statusCode);
   }
 };

@@ -9,8 +9,6 @@ const tecoService = {
     return authWrapperServer(async (session: Session | null) => {
       const headers = await getHeaders(session);
 
-      console.log('URL', `${API_LILI_URLS.PARTNERSHIPS}`);
-
       const req = await fetch(`${API_LILI_URLS.PARTNERSHIPS}`, {
         method: 'GET',
         headers,

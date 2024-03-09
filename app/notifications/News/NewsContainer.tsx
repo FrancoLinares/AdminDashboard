@@ -1,6 +1,7 @@
 import { Title } from '@tremor/react';
 import React from 'react';
 import { NEWS_EXPLANATION, TITLE } from './constants';
+import MobileNotificationForm from './Form';
 
 type Props = {};
 
@@ -12,8 +13,7 @@ const NewsContainer = ({}: Props) => {
         {NEWS_EXPLANATION}
       </p>
       <div className="mt-4">
-        <div>Formulario para enviar noticia</div>
-        <div>Botones para enviar noticia</div>
+        <MobileNotificationForm />
       </div>
     </div>
   );

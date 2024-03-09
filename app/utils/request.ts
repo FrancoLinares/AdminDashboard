@@ -23,9 +23,7 @@ export const authWrapperClient = async (
   try {
     return await promise(session);
   } catch (err: any | APIRequestError) {
-    console.log('error in authWrapperClient', err.statusCode, err.message);
     if (err.statusCode === 401 || err.message === INVALID_TOKEN) {
-      console.log('inside aunauthirized');
       if (session?.user?.access_token) {
         session.user.access_token = null;
       }
@@ -35,4 +33,29 @@ export const authWrapperClient = async (
 
     return err;
   }
+};
+
+export const makeRequest = async <T>({
+  url,
+  method,
+  body
+}: {
+  url: string;
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  body?: any;
+}): Promise<T> => {
+  const headers = await getHeaders(null);
+  const req = await fetch(url, {
+    method,
+    headers,
+    body: JSON.stringify(body)
+  });
+  const statusCode = req.status;
+  const res = await req.json();
+  if (!req.ok || res.error) {
+    const message = res.message || 'Failed to fetch';
+    throw new APIRequestError(message, statusCode);
+  }
+
+  return res;
 };

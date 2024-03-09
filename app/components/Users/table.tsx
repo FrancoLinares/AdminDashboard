@@ -30,16 +30,11 @@ export default function UsersTable({ users }: { users: User[] }) {
   ];
 
   const editHandler: (userId: string) => void = (userId) => {
-    console.log('edit');
-
     router.push(`/user/${userId}`);
   };
 
   const deleteHandler: (userId: string) => void = async (userId) => {
-    console.log('delete');
-
     const user = await userService.deleteUser(userId);
-    console.log('user response', user);
   };
 
   return (

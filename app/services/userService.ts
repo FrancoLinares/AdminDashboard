@@ -6,9 +6,7 @@ import { Session } from 'next-auth';
 const userService = {
   async deleteUser(id: string) {
     return authWrapperClient(async (session: Session | null) => {
-      console.log('this is being called from the client side');
       const headers = await getHeaders(session);
-      console.log('🚀 ~ deleteUser ~ headers:', headers);
 
       return { status: 'delete' };
 

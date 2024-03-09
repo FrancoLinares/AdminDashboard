@@ -31,7 +31,6 @@ const userService = {
   },
   async deleteUser(id: string) {
     const headers = await getHeaders();
-    console.log('🚀 ~ deleteUser ~ headers:', headers);
 
     return { status: 'delete' };
 
