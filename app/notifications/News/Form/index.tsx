@@ -167,7 +167,7 @@ const MobileNotificationForm = (props: Props) => {
 
     // Request API here
     try {
-      const newsCreated = await makeRequest<News>({
+      await makeRequest<News>({
         url: API_INTERNAL_URLS.ADD_NEWS,
         method: 'POST',
         body: {
@@ -180,7 +180,7 @@ const MobileNotificationForm = (props: Props) => {
       toast.success(SUCCESS_CREATE_NEWS);
 
       // Reset form
-      handleChangePartnership(undefined);
+      handleChangePartnership('');
       handleChangeTitle('');
       handleChangeContent('');
     } catch (err) {
