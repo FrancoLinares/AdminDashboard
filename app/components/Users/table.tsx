@@ -57,7 +57,7 @@ export default function UsersTable({ users }: { users: User[] }) {
               <Text>{user.phone}</Text>
             </TableCell>
             <TableCell>
-              {user?.verified ? <CircleXMark /> : <CircleCheck />}
+              {user?.verified ? <CircleCheck /> : <CircleXMark />}
             </TableCell>
             <TableCell>
               <div className="flex flex-row">
