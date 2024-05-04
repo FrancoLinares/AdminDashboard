@@ -3,7 +3,6 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import { Toaster } from 'sonner';
 import Nav from './nav';
-import Toast from './components/shared/toast';
 import { Suspense } from 'react';
 import SessionProvider from 'providers/SessionProvider';
 import { ModalProvider } from 'providers/ModalProvider';
@@ -39,7 +38,6 @@ export default async function RootLayout({
               </Suspense>
               {children}
               <Analytics />
-              <Toast />
             </SharedDataProvider>
           </ModalProvider>
         </SessionProvider>
