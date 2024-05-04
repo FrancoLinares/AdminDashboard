@@ -40,7 +40,7 @@ export default function SearchSelectItemCustom({
         errorMessage={errorMessage || undefined}
       >
         {options.map((option) => (
-          <SearchSelectItem value={option.value}>
+          <SearchSelectItem value={option.value} key={option.label}>
             {option.label}
           </SearchSelectItem>
         ))}
