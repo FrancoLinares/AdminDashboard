@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 type Props = {};
 
-const useSelect = () => {
-  const [value, setValue] = useState<string | undefined>();
+const useSelect = <T,>() => {
+  const [value, setValue] = useState<T | undefined>();
 
-  const handleChange = (value: string | undefined) => {
+  const handleChange = (value: T | undefined) => {
     setValue(value);
   };
 

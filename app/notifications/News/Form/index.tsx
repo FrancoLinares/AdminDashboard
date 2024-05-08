@@ -30,7 +30,7 @@ type Props = {};
 
 const MobileNotificationForm = (props: Props) => {
   const { value: selectedPartnership, handleChange: handleChangePartnership } =
-    useSelect();
+    useSelect<string>();
   const { value: titleValue, handleChange: handleChangeTitle } = useUIElement();
   const { value: contentValue, handleChange: handleChangeContent } =
     useUIElement();

@@ -7,10 +7,12 @@ export const API_LILI_URLS = {
   UNIT: `${API_LILI_BASE_URL}/api/unit`,
   PARTNERSHIPS: `${API_LILI_BASE_URL}/api/users/getPartnerships`,
   UNITS_PARTNERSHIP_ID: `${API_LILI_BASE_URL}/api/users/getUnits`,
-  NEWS: `${API_LILI_BASE_URL}/api/news`
+  NEWS: `${API_LILI_BASE_URL}/api/news`,
+  EMAIL: `${API_LILI_BASE_URL}/api/mail/customSend`
 };
 
 export const API_INTERNAL_URLS = {
   GET_PARTNERSHIPS: '/api/teco?type=partnerships',
-  ADD_NEWS: '/api/news?type=create'
+  ADD_NEWS: '/api/news?type=create',
+  CREATE_EMAIL: '/api/email?type=create'
 };
